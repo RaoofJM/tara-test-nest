@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  app:
+    build: "./"
+    container_name: "app"
+    restart: "always"
+    env_file: .env
+    ports:
+      - '$PORT:$PORT'
+    volumes:
+      - ./src:/home/node/app/src
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    env_file: .env
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USERNAME
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+    ports:
+      - '$DB_PORT:5432'
+    volumes:
+      - type: "bind"
+        source: "./db/postgres"
+        target: "/var/lib/postgresql/data"
