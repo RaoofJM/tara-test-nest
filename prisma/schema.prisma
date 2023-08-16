@@ -21,6 +21,7 @@ model User {
   email     String   @unique
   password  String
   gender    Gender
+  age       Int
   createdAt DateTime @default(now())
   uptatedAt DateTime @updatedAt
 }
